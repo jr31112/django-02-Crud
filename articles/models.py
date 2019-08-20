@@ -6,6 +6,8 @@ from django.db import models
 # 각각의 컬럼(or 필드) 정의
 class Article(models.Model):
     # CharField - 필수인자로 max_length 지정
+    # id : integer 자동으로 정의(Primary Key)
+    # id = models.AutoField(primary_key=True) -> Integer 값들이 자동으로 하나씩 증가(AUTOCREMENT)
     title = models.CharField(max_length=10)
     content = models.TextField()
     # DateTimeField
@@ -21,4 +23,4 @@ class Article(models.Model):
 #           : 모델 설계도
 # makemigrations : migragtion 파일 생성
 #                : DB 설계도 작성
-# migrate : migrate 파일 DB 반영
+# migrate : migrate 파일 DB 반영 

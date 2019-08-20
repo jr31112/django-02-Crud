@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Article
 
 # Create your views here.
@@ -24,4 +24,24 @@ def create(request):
     context = {
         'article' : article,
     }
-    return render(request, 'articles/create.html', context)
+    # return render(request, 'articles/create.html', context)
+    return redirect(f'/articles/{article.pk}/')
+
+def detail(request, article_pk):
+    article = Article.objects.get(pk=article_pk)
+    context = {
+        'article' : article,
+    }
+    return render(request, 'articles/detail.html', context)
+
+def delete(request, article_pk):
+    article = Article.objects.get(pk=article_pk)
+    article.delete()
+    return redirect('/articles/')
+
+def edit(request, article_pk):
+    article = Article.objects.get(pk=article_pk)
+    context = {
+        'article' : article,
+    }
+    return render(request, 'articles/edit.html', context)

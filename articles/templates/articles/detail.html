@@ -1,0 +1,11 @@
+{% extends 'articles/base.html' %}
+{% block body %}
+<h1>{{ article.id}}번글 {{ article.title }}</h1>
+<div>
+  <p style="font-size: 5px; display: inline;"> 작성시간 : {{ article.created_at }} </p>
+  <p style="font-size: 5px; display: inline;"> 수정시간 : {{ article.updated_at }} </p>
+</div>
+<hr>
+<p> {{ article.content }}</p>
+
+{% endblock %}
