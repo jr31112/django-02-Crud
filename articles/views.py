@@ -45,3 +45,11 @@ def edit(request, article_pk):
         'article' : article,
     }
     return render(request, 'articles/edit.html', context)
+
+def update(request, article_pk):
+    article = Article.objects.get(pk=article_pk)
+    article.title = request.GET.get('title')
+    article.content = request.GET.get('content')
+    article.save()
+    return redirect(f'/articles/{article_pk}/')  
+    
