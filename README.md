@@ -58,12 +58,12 @@ class Article(models.Model):
       * `auto_now=True` : 변경시에 자동으로 저장(게시글 수정일)
   * `BooleanField()`, `FileField()`, `IntegerField()` 등 다양한 필드를 지정할 수 있다.
 
-* `id`값은 자동으로 `INTEGER` 타입으로 필드가 생성되고, 이는 `PK(Primary Key)`이다.
+  * `id`값은 자동으로 `INTEGER` 타입으로 필드가 생성되고, 이는 `PK(Primary Key)`이다.
 
 * 모든 필드는 `NOT NULL` 조건이 선언되며, 해당 옵션을 수정하려면 아래와 같이 정의할 수 있다.
 
   ```python
-  username = models.CharField(max_length=10, nullabel=True)
+  username = models.CharField(max_length=10, nullable=True)
   ```
 
   
