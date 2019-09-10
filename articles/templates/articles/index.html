@@ -1,7 +1,7 @@
 {% extends 'articles/base.html' %}
 {% block body %}
 <h1>게시판에 오신걸 환영합니다.</h1>
-<a href="{% url 'articles:new' %}" class="btn btn-primary">글 작성하기</a>
+<a href="{% url 'articles:create' %}" class="btn btn-primary">글 작성하기</a>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -17,8 +17,11 @@
       <td><a href="/articles/{{ article.pk }}/">{{ article.title }}</a></td>
       <td>
         {{ article.created_at }}
-        <a href="{% url 'articles:edit' article.pk %}">수정하기</a>
-        <a href="{% url 'articles:delete' article.pk %}">삭제하기</a>
+        <a href="{% url 'articles:update' article.pk %}">수정하기</a>
+        <form action="{% url 'articles:delete' article.pk %}" method="POST" oneclick="return confirm('진짜 지울래?')">
+          {% csrf_token %}
+          <input type="submit" value="삭제">
+        </form>
       </td>
     </tr>
     {% endfor %}
