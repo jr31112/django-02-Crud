@@ -1,6 +1,6 @@
 {% extends 'articles/base.html' %}
 {% block body %}
-<form action="/articles/{{ article.pk }}/update/" method="get">
+<form action="{% url 'articles:new' %}" method="get">
   <label for="title">제목 : </label>
   <input id="title" type="text" name="title" value= {{ article.title }}>
   <hr>

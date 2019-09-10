@@ -6,7 +6,26 @@
 
 * 가상환경(venv)
 
-  * python 3.7.4
+  * python 3.7.4 에서 가상환경 생성
+
+    ```bash
+    $ python -v
+    python 3.7.4
+    $ python -m venv venv
+    ```
+
+  *  가상환경 실행
+
+    ```bash
+    $ source venv/Scripts/activate
+    (venv) $	
+    ```
+
+  * 가상환경 종료
+
+    ```bash
+    (venv) $ deactivate
+    ```
 
 * pip - [requirements.txt](./requirements.txt)확인
 
@@ -122,7 +141,7 @@ Running migrations:
 
 * 데이터베이스에 테이블을 만들 때, 기본적오로 `app이름_model이름`으로 생성된다.
 
-## 3. Django Quert Methods
+## 3. Django Query Methods
 
 > Django ORM 을 활용하게 되면, 파이썬 객체 조직으로 데이터베이스 조작이 가능하다.
 >
