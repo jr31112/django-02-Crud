@@ -24,10 +24,10 @@ def create(request):
         # embed()
         if article_form.is_valid():
         # 검증에 성공하면 저장하고,
-            title = article_form.cleaned_data.get('title')
-            content = article_form.cleaned_data.get('content')
-            article = Article(title = title, content = content)
-            article.save()
+            # title = article_form.cleaned_data.get('title')
+            # content = article_form.cleaned_data.get('content')
+            # article = Article(title = title, content = content)
+            article = article_form.save()
             # redirect
             return redirect('articles:detail', article.pk)
     else:
@@ -73,19 +73,11 @@ def update(request, article_pk):
     if request.method == 'POST':
         article_form = ArticleForm(request.POST)
         if article_form.is_valid():
-            article.title = article_form.cleaned_data.get('title')
-            article.content = article_form.cleaned_data.get('content')
-            article.save()
+            article = article_form.save()
         return redirect('articles:detail', article_pk)  
     else:
-        article_form = ArticleForm(
-            initial={
-                'title': article.title,
-                'content' : article.content
-            }
-        )
+        article_form = ArticleForm(instance=article)
     context = {
-        'article' : article,
         'article_form' : article_form
     }
     return render(request, 'articles/form.html', context)
