@@ -29,7 +29,7 @@
     <ul class="messages">
       {% for message in messages %}
       <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</div>
-        {% endfor %}
+      {% endfor %}
     </ul>
     {% endif %}
     {% block body %}

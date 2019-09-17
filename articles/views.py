@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_POST
-# from IPython import embed
+from IPython import embed
 from .models import Article, Comment
 from django.contrib import messages
+from .forms import ArticleForm
 
 # Create your views here.
 def index(request):
@@ -18,21 +19,26 @@ def new(request):
 
 def create(request):
     if request.method == 'POST':
-        # 받아오는 로직
-        title = request.POST.get('title')
-        content = request.POST.get('content')
-        # 저장하는 로직
-        article = Article(title = title, content = content)
-        article.save()
-        # 전달하는 로직
-        context = {
-            'article' : article,
-        }
+    # POST 요청 -> 검증 및 저장
+        article_form = ArticleForm(request.POST)
         # embed()
-        # return render(request, 'articles/create.html', context)
-        return redirect('articles:detail', article.pk)
+        if article_form.is_valid():
+        # 검증에 성공하면 저장하고,
+            title = article_form.cleaned_data.get('title')
+            content = article_form.cleaned_data.get('content')
+            article = Article(title = title, content = content)
+            article.save()
+            # redirect
+            return redirect('articles:detail', article.pk)
     else:
-        return render(request, 'articles/new.html')
+    # GET 요청 -> Form
+        article_form = ArticleForm()
+    # GET -> 비어있는 Form context
+    # POST -> 검증 실패시 에러메시지와 입력값 채워진 Form context
+    context = {
+        'article_form' : article_form
+    }
+    return render(request, 'articles/form.html', context)
 
 def detail(request, article_pk):
     article = Article.objects.get(pk=article_pk)
@@ -63,18 +69,26 @@ def delete(request, article_pk):
 #     return render(request, 'articles/edit.html', context)
 
 def update(request, article_pk):
+    article = Article.objects.get(pk=article_pk)
     if request.method == 'POST':
-        article = Article.objects.get(pk=article_pk)
-        article.title = request.POST.get('title')
-        article.content = request.POST.get('content')
-        article.save()
+        article_form = ArticleForm(request.POST)
+        if article_form.is_valid():
+            article.title = article_form.cleaned_data.get('title')
+            article.content = article_form.cleaned_data.get('content')
+            article.save()
         return redirect('articles:detail', article_pk)  
     else:
-        article = Article.objects.get(pk=article_pk)
-        context = {
-            'article' : article,
-        }
-        return render(request, 'articles/edit.html', context)
+        article_form = ArticleForm(
+            initial={
+                'title': article.title,
+                'content' : article.content
+            }
+        )
+    context = {
+        'article' : article,
+        'article_form' : article_form
+    }
+    return render(request, 'articles/form.html', context)
 
 @require_POST
 def comment_create(request, article_pk):
