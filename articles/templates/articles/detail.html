@@ -12,6 +12,10 @@
 {% for comment in comments %}
 <li>{{ comment.content }}</li>
 <li>{{ comment.created_at }}</li>
+<form action="{% url 'articles:comment_delete' article.pk comment.pk %}" method="POST" oneclick="return confirm('진짜 지울래?')">
+  {% csrf_token %}
+  <input type="submit" value="삭제">
+</form>
 {% empty %}
   <p>댓글이 없어요 작성해주세요. </p>
 {% endfor %}
