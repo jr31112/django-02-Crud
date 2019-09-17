@@ -69,7 +69,8 @@ def delete(request, article_pk):
 #     return render(request, 'articles/edit.html', context)
 
 def update(request, article_pk):
-    article = Article.objects.get(pk=article_pk)
+    # article = Article.objects.get(pk=article_pk)
+    article = get_object_or_404(Article, pk=article_pk)
     if request.method == 'POST':
         article_form = ArticleForm(request.POST)
         if article_form.is_valid():
