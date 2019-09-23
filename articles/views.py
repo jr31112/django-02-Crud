@@ -3,7 +3,7 @@ from django.views.decorators.http import require_POST
 from IPython import embed
 from .models import Article, Comment
 from django.contrib import messages
-from .forms import ArticleForm
+from .forms import ArticleForm, CommentForm
 
 # Create your views here.
 def index(request):
@@ -14,8 +14,8 @@ def index(request):
     # embed()
     return render(request, 'articles/index.html', context)
 
-def new(request):
-    return render(request, 'articles/new.html')
+# def new(request):
+#     return render(request, 'articles/new.html')
 
 def create(request):
     if request.method == 'POST':
@@ -43,9 +43,11 @@ def create(request):
 def detail(request, article_pk):
     # article = Article.objects.get(pk=article_pk)
     article = get_object_or_404(Article, pk=article_pk)
+    comment_form = CommentForm()
     context = {
         'article' : article,
         'comments' : article.comment_set.all(),
+        'comment_form' : comment_form,
     }
     return render(request, 'articles/detail.html', context)
 
@@ -85,11 +87,27 @@ def update(request, article_pk):
 
 @require_POST
 def comment_create(request, article_pk):
-    comment = Comment()
-    comment.content = request.POST.get('content')
-    comment.article_id = article_pk
-    comment.save()
+    article = get_object_or_404(Article, pk=article_pk)
+    # 1. modleform에 사용자 입력값 넣고
+    comment_form = CommentForm(request.POST)
+
+    # 2. 검증하고,
+    if comment_form.is_valid():
+    # 3. 맞으면 저장
+        # 3-1. 사용자 입력값으로 comment instance 생성(저장은 x)
+        comment = comment_form.save(commit=False)
+        # 3-2. Foreign Key 넣고 저장
+        comment.article = article
+        comment.save()
+    # 4. return redirect
+    else:
+        messages.success(request, '댓글이 형식에 맞지 않습니다.')
     return redirect('articles:detail', article_pk)
+    # comment = Comment()
+    # comment.content = request.POST.get('content')
+    # comment.article = article
+    # comment.save()
+    # return redirect('articles:detail', article_pk)
 
 @require_POST
 def comment_delete(request, article_pk, comment_pk):

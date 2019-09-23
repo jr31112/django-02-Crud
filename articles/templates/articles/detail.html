@@ -1,4 +1,6 @@
 {% extends 'articles/base.html' %}
+{% load bootstrap4 %}
+
 {% block body %}
 <h1>{{ article.id}}번글 {{ article.title }}</h1>
 <div>
@@ -28,6 +30,7 @@
 <hr>
 <form action="{% url "articles:comment_create" article.pk %}" method="POST">
   {% csrf_token %}
+  {% bootstrap_form comment_form %}
   <input type="text" name="content">
   <input type="submit" value="얍~!">
 </form>
