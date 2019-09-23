@@ -8,6 +8,7 @@
   <p style="font-size: 5px; display: inline;"> 수정시간 : {{ article.updated_at }} </p>
   <br>
   <img src="{{ article.image.url }}" alt="{{ article.image.name }}" style="width:500px">
+  <img src="{{ article.image_thumbnail.url }}" alt="">
 </div>
 <hr>
 <p> {{ article.content }}</p>
