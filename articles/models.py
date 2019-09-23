@@ -10,6 +10,7 @@ class Article(models.Model):
     # id = models.AutoField(primary_key=True) -> Integer 값들이 자동으로 하나씩 증가(AUTOCREMENT)
     title = models.CharField(max_length=10)
     content = models.TextField()
+    image = models.ImageField(blank=True)
     # DateTimeField
     #     auto_now_add : 생성시 자동으로 저장
     #     auto_now : 수정시마다 자동으로 저장

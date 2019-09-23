@@ -8,7 +8,9 @@
   <h1 class="text-center">글 작성하기</h1>
 {% endif %}
 
-<form action="" method="post" class="form">
+<form action="" method="POST" class="form" enctype='multipart/form-data'>
+{% comment %} request.FILES.get('image')과 같이 파일을 가져오고자 할때
+ enctype를 multipart/form으로 변경해 줘야 받아 올 수 있다. {% endcomment %}
     {% csrf_token %}
     {% bootstrap_form article_form %}
     {% buttons %}

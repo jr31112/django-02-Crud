@@ -6,6 +6,8 @@
 <div>
   <p style="font-size: 5px; display: inline;"> 작성시간 : {{ article.created_at }} </p>
   <p style="font-size: 5px; display: inline;"> 수정시간 : {{ article.updated_at }} </p>
+  <br>
+  <img src="{{ article.image.url }}" alt="{{ article.image.name }}" style="width:500px">
 </div>
 <hr>
 <p> {{ article.content }}</p>
@@ -14,6 +16,7 @@
 {% for comment in comments %}
 <li>{{ comment.content }}</li>
 <li>{{ comment.created_at }}</li>
+
 <form action="{% url 'articles:comment_delete' article.pk comment.pk %}" method="POST" oneclick="return confirm('진짜 지울래?')">
   {% csrf_token %}
   <input type="submit" value="삭제">
