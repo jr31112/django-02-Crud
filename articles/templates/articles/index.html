@@ -1,6 +1,11 @@
 {% extends 'articles/base.html' %}
-{% block body %}
-<h1>게시판에 오신걸 환영합니다.</h1>
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'articles/style.css'%}">
+{% endblock %}
+
+{% block body %}<h1 class='title'>게시판에 오신걸 환영합니다.</h1>
+<img src="{% static 'articles/bg.jpg'%}" alt="배경" width>
 <a href="{% url 'articles:create' %}" class="btn btn-primary">글 작성하기</a>
 <table class="table table-striped">
   <thead>
