@@ -1,35 +1,37 @@
 {% extends 'articles/base.html' %}
-{% load static %}
+{% load static%}
 {% block css %}
 <link rel="stylesheet" href="{% static 'articles/style.css'%}">
+<style>
+  tr > th:nth-of-type(2) {
+    width: 50%;
+  }
+</style>
 {% endblock %}
-
-{% block body %}<h1 class='title'>게시판에 오신걸 환영합니다.</h1>
-<img src="{% static 'articles/bg.jpg'%}" alt="배경" width>
-<a href="{% url 'articles:create' %}" class="btn btn-primary">글 작성하기</a>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">제목</th>
-      <th scope="col">작성일자</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for article in articles %}
-    <tr>
-      <th scope="row">{{ article.id }}</th>
-      <td><a href="/articles/{{ article.pk }}/">{{ article.title }}</a></td>
-      <td>
-        {{ article.created_at }}
-        <a href="{% url 'articles:update' article.pk %}">수정하기</a>
-        <form action="{% url 'articles:delete' article.pk %}" method="POST" oneclick="return confirm('진짜 지울래?')">
-          {% csrf_token %}
-          <input type="submit" value="삭제">
-        </form>
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+{% block body %}
+  <img src="{% static 'articles/bg.jpg'%}" alt="배경" width="500">
+  <h1 class="text-center title">게시판에 오신걸 환영합니다.</h1>
+  <a href="{% url 'articles:create' %}" class="btn btn-warning">글 작성하기</a>
+  <table class="table mt-5">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">제목</th>
+        <th scope="col">작성일자</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for article in articles %}
+      <tr>
+        <th scope="row">{{ article.id }}</th>
+        <td>
+          <a href="{% url 'articles:detail' article.pk %}">
+              {{ article.title }}
+          </a>
+        </td>
+        <td>{{ article.created_at }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}

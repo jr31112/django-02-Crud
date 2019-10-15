@@ -1,21 +1,24 @@
 {% extends 'articles/base.html' %}
+
 {% block body %}
+<h1>글 수정하기</h1>
 <form action="{% url 'articles:update' article.pk %}" method="POST">
   {% csrf_token %}
-  <label for="title">제목 : </label>
-  <input id="title" type="text" name="title" value= {{ article.title }}>
-  <hr>
-  <label for="content">내용 : </label>
-  <br>
-  <textarea name="content" id="content" cols="30" rows="10" >{{ article.content }}</textarea> 
-  <br>
-  <input type="submit" value="수정">
+  <div class="form-group">
+    <label for="exampleInputEmail1">제목</label>
+    <input name="title" value="{{ article.title }}" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="제목을 입력하세요.">
+    <small id="emailHelp" class="form-text text-muted">글의 제목을 작성 해주세요.</small>
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">내용</label>
+    <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="3">{{ article.content }}</textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
 <form action="" method="POST">
   {% csrf_token %}
-  {{ article_form.as_table }}
-  <button type="submit" class="btn btn-primary">submit</button>
+  {{ article_form.as_p }}
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-
 {% endblock %}
