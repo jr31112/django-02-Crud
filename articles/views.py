@@ -2,6 +2,7 @@ from IPython import embed
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST, require_GET
+from django.contrib.auth.decorators import login_required
 
 from .forms import ArticleForm, CommentForm
 from .models import Article, Comment
@@ -18,7 +19,9 @@ def index(request):
 # def new(request):
 #     return render(request, 'articles/new.html')
 
+@login_required
 def create(request):
+    
     if request.method == 'POST':
         # embed()
     # POST 요청 -> 검증 및 저장
