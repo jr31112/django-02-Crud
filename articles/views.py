@@ -21,7 +21,6 @@ def index(request):
 
 @login_required
 def create(request):
-    
     if request.method == 'POST':
         # embed()
     # POST 요청 -> 검증 및 저장
