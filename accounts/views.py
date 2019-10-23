@@ -5,6 +5,8 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from django.contrib.auth import get_user_model
 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 
@@ -73,3 +75,14 @@ def password_change(request):
         'form': form
     }
     return render(request, 'accounts/form.html', context)
+
+def profile(request, account_pk):
+    User = get_user_model()
+    user = get_object_or_404(User, pk=account_pk)
+    if user == request.user:
+        context = {
+            'user_profile' : user,
+        }
+    else:
+        context = {}
+    return render(request, 'accounts/profile.html', context)
