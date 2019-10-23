@@ -3,7 +3,7 @@
 {% block body %}
 <h1>{{ article.id }}번 글</h1>
 <h2>{{ article.title }}</h2>
-<h2>작성자 : {{ article.user }}</h2>
+<h2>작성자 : <a href="{% url 'accounts:profile' article.user.pk %}"> {{ article.user }} </a></h2>
 {% if article.image %}
 <img src="{{ article.image.url }}">
 {% comment %} <img src="{{ article.image_thumbnail.url }}"> {% endcomment %}

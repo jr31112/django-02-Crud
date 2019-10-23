@@ -2,6 +2,19 @@
 
 {% block body %}
 <h1> {{ user_profile.username }}의 프로필 </h1>
+{% with user_profile.followers.all as followers %}
+  <a href=" {% url 'accounts:follow' user_profile.pk %} ">
+    {% if user == user_profile %}
+
+    {% elif user in followers %}
+      팔로우 취소
+    {% else %}
+      팔로우
+    {% endif %}
+  </a>
+  <p>팔로우 : {{ user_profile.followings.all }}</p>
+  <p>팔로워 : {{ followers }} </p>
+{% endwith %}
 <h2> 내가 쓴 글 ({{ user_profile.article_set.all.count }}) </h2>
 {% for article in user_profile.article_set.all %}
   <p>
