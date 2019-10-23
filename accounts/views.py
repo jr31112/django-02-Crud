@@ -1,36 +1,3 @@
-<<<<<<< HEAD
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login as auth_login
-from django.contrib.auth import logout as auth_logout
-
-# Create your views here.
-def signup(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('articles:index')
-    else:
-        form = UserCreationForm()
-    context = {
-        'form' : form
-    }
-    return render(request, 'accounts/signup.html', context)
-
-def login(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(request, request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            auth_login(request, user)
-            return redirect('articles:index')
-    else:
-        form = AuthenticationForm()
-    context = {
-        'form' : form
-=======
 from IPython import embed
 from django.shortcuts import render, redirect
 from django.contrib.auth import update_session_auth_hash
@@ -71,15 +38,11 @@ def login(request):
         form = AuthenticationForm()
     context = {
         'form': form
->>>>>>> 595f42d1232b1f26e9e8049182029062cdf2ac10
     }
     return render(request, 'accounts/login.html', context)
 
 def logout(request):
     auth_logout(request)
-<<<<<<< HEAD
-    return redirect('articles:index')
-=======
     return redirect('articles:index')
 
 @login_required
@@ -110,4 +73,3 @@ def password_change(request):
         'form': form
     }
     return render(request, 'accounts/form.html', context)
->>>>>>> 595f42d1232b1f26e9e8049182029062cdf2ac10

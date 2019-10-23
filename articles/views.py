@@ -120,3 +120,17 @@ def comment_delete(request, article_pk, comment_pk):
     # messages.add_message(request, messages.INFO, '댓글이 삭제 되었습니다.')
     messages.success(request, '댓글이 삭제되었습니다.')
     return redirect('articles:detail', article_pk)
+
+@login_required
+def like(request, article_pk):
+    article = Article.objects.get(pk=article_pk)
+    # 좋아요를 누른적이 있다면?
+    if request.user in article.like_users.all():
+        # 좋아요 취소 로직
+        article.like_users.remove(request.user)
+    # 아니면
+    else:
+        # 좋아요 로직
+        article.like_users.add(request.user)
+    return redirect('articles:detail', article_pk)
+    

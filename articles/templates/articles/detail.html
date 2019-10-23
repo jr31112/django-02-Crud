@@ -3,15 +3,24 @@
 {% block body %}
 <h1>{{ article.id }}번 글</h1>
 <h2>{{ article.title }}</h2>
+{% if article.image %}
 <img src="{{ article.image.url }}">
 <img src="{{ article.image_thumbnail.url }}">
-
+{% endif %}
 <p>작성일자 : {{ article.created_at }}</p>
 <p>수정일자 : {{ article.updated_at }}</p>
 <hr>
 <p>{{ article.content }}</p>
 <!-- a tag : GET -->
 <a href="{% url 'articles:index' %}">목록으로</a>
+<p>{{ article.like_users.count }}명이 이 글을 좋아합니다.</p>
+<a href="{% url 'articles:like' article.pk %}">
+    {% if request.user in article.like_users.all %}
+        좋아요 취소
+    {% else %}
+        좋아요
+    {% endif %}
+</a>
 <form action="{% url 'articles:delete' article.pk %}" method="POST" 
 onclick="return confirm('진짜 지울래?')">
     {% csrf_token %}
