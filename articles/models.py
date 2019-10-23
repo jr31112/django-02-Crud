@@ -2,7 +2,7 @@ from imagekit.models import ProcessedImageField, ImageSpecField
 from imagekit.processors import ResizeToFill, ResizeToFit, Thumbnail
 from django.db import models
 from django.conf import settings
-
+    
 # Create your models here.
 # 1. 모델(스키마) 정의
 # 데이터베이스 테이블을 정의하고,
@@ -28,9 +28,16 @@ class Article(models.Model):
     #    auto_now : 수정시마다 자동으로 저장
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+                            settings.AUTH_USER_MODEL, 
+                            on_delete=models.CASCADE
+                            )
     # settings.AUTH_USER_MODEL : 'accounts.User' (str)
-    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_articles', blank=True)
+    like_users = models.ManyToManyField(
+                            settings.AUTH_USER_MODEL,
+                            related_name='like_articles',
+                            blank=True
+                            )
 
     def __str__(self):
         return f'{self.id} : {self.title}'
@@ -39,6 +46,9 @@ class Comment(models.Model):
     content = models.CharField(max_length=140)
     created_at = models.DateTimeField(auto_now_add=True)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, 
+                            on_delete=models.CASCADE
+                            )
     # on_delete 
     # 1. CASCADE : 글이 삭제되었을 때 모든 댓글을 삭제
     # 2. PROTECT : 댓글이 존재하면 글 삭제 안됨.

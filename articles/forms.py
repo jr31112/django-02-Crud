@@ -4,12 +4,12 @@ from .models import Article, Comment
 class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
-        exclude = ('user', )
+        fields = ('title', 'content', 'image', )
 
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        exclude = ('article', )
+        exclude = ('article', 'user', )
 
 # class ArticleForm(forms.ModelForm):
 #     # 위젯 설정 2.
